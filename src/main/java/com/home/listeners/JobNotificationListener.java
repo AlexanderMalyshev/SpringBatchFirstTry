@@ -17,14 +17,14 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JobCompletionNotificationListener extends JobExecutionListenerSupport {
+public class JobNotificationListener extends JobExecutionListenerSupport {
 
-	private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
+	private static final Logger log = LoggerFactory.getLogger(JobNotificationListener.class);
 
 	private final JdbcTemplate jdbcTemplate;
 
 	@Autowired
-	public JobCompletionNotificationListener(JdbcTemplate jdbcTemplate) {
+	public JobNotificationListener(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 

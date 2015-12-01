@@ -1,7 +1,5 @@
 package com.home.configuration;
 
-import javax.sql.DataSource;
-
 import com.home.data.Person;
 import com.home.processors.PersonItemProcessor;
 import org.springframework.batch.core.Job;
@@ -20,13 +18,19 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
+
 @Configuration
+@EnableBatchProcessing
 public class BatchConfiguration {
+    @Autowired
+    DataSource dataSource;
 
     // tag::readerwriterprocessor[]
     @Bean
@@ -50,7 +54,7 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public ItemWriter<Person> writer(DataSource dataSource) {
+    public ItemWriter<Person> writer() {
         JdbcBatchItemWriter<Person> writer = new JdbcBatchItemWriter<Person>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Person>());
         writer.setSql("INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)");
@@ -83,8 +87,7 @@ public class BatchConfiguration {
     // end::jobstep[]
 
     @Bean
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource);
     }
-
 }

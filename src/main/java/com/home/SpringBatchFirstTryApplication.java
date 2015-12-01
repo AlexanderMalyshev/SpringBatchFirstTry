@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@EnableBatchProcessing
-//@ImportResource("classpath:/context/batch.xml")
 public class SpringBatchFirstTryApplication {
 
     public static void main(String[] args) {
