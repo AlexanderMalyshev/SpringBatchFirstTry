@@ -31,7 +31,7 @@ public class JobNotificationListener extends JobExecutionListenerSupport {
 	@Override
 	public void afterJob(JobExecution jobExecution) {
 		if(jobExecution.getStatus() == BatchStatus.COMPLETED) {
-			log.info("!!! JOB FINISHED! Time to verify the results");
+			log.info("-> JOB FINISHED! Time to verify the results");
 
 			List<Person> results = jdbcTemplate.query("SELECT first_name, last_name FROM people", new RowMapper<Person>() {
 				@Override
@@ -49,7 +49,7 @@ public class JobNotificationListener extends JobExecutionListenerSupport {
 
 	@Override
 	public void beforeJob(JobExecution jobExecution) {
-		log.info("!!! JOB STARTED!");
+		log.info("-> JOB STARTED!");
 		super.beforeJob(jobExecution);
 	}
 }

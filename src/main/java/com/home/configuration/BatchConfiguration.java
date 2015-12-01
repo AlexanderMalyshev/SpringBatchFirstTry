@@ -2,9 +2,7 @@ package com.home.configuration;
 
 import com.home.data.Person;
 import com.home.processors.PersonItemProcessor;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecutionListener;
-import org.springframework.batch.core.Step;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -76,12 +74,15 @@ public class BatchConfiguration {
 
     @Bean
     public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<Person> reader,
-            ItemWriter<Person> writer, ItemProcessor<Person, Person> processor) {
+                      ItemWriter<Person> writer, ItemProcessor<Person, Person> processor,
+                      ChunkListener chunkListener, StepExecutionListener stepExecutionListener) {
         return stepBuilderFactory.get("step1")
-                .<Person, Person> chunk(10)
+                .<Person, Person> chunk(3)
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
+                .listener(chunkListener)
+                .listener(stepExecutionListener)
                 .build();
     }
     // end::jobstep[]
