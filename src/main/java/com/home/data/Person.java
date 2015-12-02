@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.persistence.GenerationType;
 
-@Entity(name = "people")
 @Data
 @NoArgsConstructor
+@Entity(name = "people")
 public class Person {
 
     @Id
