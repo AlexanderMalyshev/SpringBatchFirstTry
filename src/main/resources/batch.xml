@@ -13,8 +13,8 @@
 
 
     <!--<batch:job id="importUserJob" >-->
-        <!--<batch:step id="step1" >-->
-            <!--<batch:tasklet>-->
+        <!--<batch:step id="step1">-->
+            <!--<batch:tasklet transaction-manager="batchTxManager">-->
                 <!--<batch:chunk reader="itemReader" processor="itemProcessor" writer="itemWriter"-->
                     <!--commit-interval="3" />-->
             <!--</batch:tasklet>-->
