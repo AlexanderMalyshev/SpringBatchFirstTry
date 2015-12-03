@@ -16,16 +16,19 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Configuration
-//or @ImportResource("classpath:batch.xml")
+//@ImportResource("classpath:batch.xml")
 public class BatchConfiguration {
 
     @Resource(name = "batchTxManager")
@@ -33,9 +36,9 @@ public class BatchConfiguration {
 
     //tag::readerwriterprocessor[]
     @Bean
-    public ItemReader<Person> reader() {
+    public ItemReader<Person> reader(@Value("${input.file.name}") String fileName) {
         FlatFileItemReader<Person> reader = new FlatFileItemReader<Person>();
-        reader.setResource(new ClassPathResource("sample-data.csv"));
+        reader.setResource(new ClassPathResource(fileName));
         reader.setLineMapper(new DefaultLineMapper<Person>() {{
             setLineTokenizer(new DelimitedLineTokenizer() {{
                 setNames(new String[] { "firstName", "lastName" });

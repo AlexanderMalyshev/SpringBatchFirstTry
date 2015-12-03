@@ -12,47 +12,47 @@
             http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 
-    <!--<batch:job id="importUserJob" >-->
-        <!--<batch:step id="step1">-->
-            <!--<batch:tasklet transaction-manager="batchTxManager">-->
-                <!--<batch:chunk reader="itemReader" processor="itemProcessor" writer="itemWriter"-->
-                    <!--commit-interval="3" />-->
-            <!--</batch:tasklet>-->
-            <!--<batch:listeners>-->
-                <!--<batch:listener ref="stepNotificationListener" />-->
-                <!--<batch:listener ref="batchNotificationListener" />-->
-            <!--</batch:listeners>-->
-        <!--</batch:step>-->
-        <!--<batch:listeners>-->
-            <!--<batch:listener ref="jobNotificationListener" />-->
-        <!--</batch:listeners>-->
-    <!--</batch:job>-->
+    <batch:job id="importUserJob" >
+        <batch:step id="step1">
+            <batch:tasklet transaction-manager="batchTxManager" >
+                <batch:chunk reader="itemReader" processor="itemProcessor" writer="itemWriter"
+                    commit-interval="3" />
+            </batch:tasklet>
+            <batch:listeners>
+                <batch:listener ref="stepNotificationListener" />
+                <batch:listener ref="batchNotificationListener" />
+            </batch:listeners>
+        </batch:step>
+        <batch:listeners>
+            <batch:listener ref="jobNotificationListener" />
+        </batch:listeners>
+    </batch:job>
 
-    <!--<bean id="itemReader" class="org.springframework.batch.item.file.FlatFileItemReader"-->
-          <!--p:resource="classpath:sample-data.csv"-->
-          <!--p:lineMapper-ref="lineMapper" />-->
+    <bean id="itemReader" class="org.springframework.batch.item.file.FlatFileItemReader"
+          p:resource="${input.file.name}"
+          p:lineMapper-ref="lineMapper" />
 
-    <!--<bean id="lineMapper" class="org.springframework.batch.item.file.mapping.DefaultLineMapper"-->
-          <!--p:lineTokenizer-ref="lineTokenizer"-->
-          <!--p:fieldSetMapper-ref="fieldSetMapper" />-->
+    <bean id="lineMapper" class="org.springframework.batch.item.file.mapping.DefaultLineMapper"
+          p:lineTokenizer-ref="lineTokenizer"
+          p:fieldSetMapper-ref="fieldSetMapper" />
 
-    <!--<bean id="lineTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"-->
-          <!--p:names="firsName, lastName" />-->
+    <bean id="lineTokenizer" class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"
+          p:names="firsName, lastName" />
 
-    <!--<bean id="fieldSetMapper" class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"-->
-          <!--p:targetType="com.home.data.Person" />-->
+    <bean id="fieldSetMapper" class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"
+          p:targetType="com.home.data.Person" />
 
-    <!--<bean id="itemProcessor" class="com.home.processors.PersonItemProcessor" />-->
+    <bean id="itemProcessor" class="com.home.processors.PersonItemProcessor" />
 
-    <!--<bean id="itemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter"-->
-          <!--p:itemSqlParameterSourceProvider-ref="itemSqlParameterSourceProvider"-->
-          <!--p:sql="INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)"-->
-          <!--p:dataSource-ref="dataSource" />-->
+    <bean id="itemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter"
+          p:itemSqlParameterSourceProvider-ref="itemSqlParameterSourceProvider"
+          p:sql="INSERT INTO people (first_name, last_name) VALUES (:firstName, :lastName)"
+          p:dataSource-ref="dataSource" />
 
-    <!--<bean id="itemSqlParameterSourceProvider" class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />-->
+    <bean id="itemSqlParameterSourceProvider" class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
 
-    <!--<bean id="stepNotificationListener" class="com.home.listeners.StepNotificationListener" />-->
-    <!--<bean id="batchNotificationListener" class="com.home.listeners.BatchNotificationListener" />-->
-    <!--<bean id="jobNotificationListener" class="com.home.listeners.JobNotificationListener" />-->
+    <bean id="stepNotificationListener" class="com.home.listeners.StepNotificationListener" />
+    <bean id="batchNotificationListener" class="com.home.listeners.BatchNotificationListener" />
+    <bean id="jobNotificationListener" class="com.home.listeners.JobNotificationListener" />
 
 </beans>
