@@ -1,6 +1,5 @@
 package com.home.configuration;
 
-import com.home.data.PersonDao;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.explore.JobExplorer;
@@ -9,16 +8,14 @@ import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
 import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.persistence.EntityManagerFactory;
+import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 public class InBatchJobConfig {
+
     @Bean(name = "batchTxManager")
     public ResourcelessTransactionManager batchTxManager() {
         return new ResourcelessTransactionManager();
@@ -58,5 +55,12 @@ public class InBatchJobConfig {
         SimpleJobLauncher launcher = new SimpleJobLauncher();
         launcher.setJobRepository(jobRepository);
         return launcher;
+    }
+
+    @Bean
+    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
+        PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
+        ppc.setLocation(new ClassPathResource("application.properties"));
+        return ppc;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -29,6 +30,7 @@ public class JpaRepositoryConfiguration {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("com.home.data");
         factory.setDataSource(dataSource);
+        factory.setJpaDialect(new HibernateJpaDialect());
         factory.afterPropertiesSet();
 
         return factory.getObject();

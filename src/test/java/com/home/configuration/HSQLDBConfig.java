@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 @Configuration
 public class HSQLDBConfig {
-    @Bean
+    @Bean(name = "dataSource")
     @Profile("embedded")
     // -Dspring.profiles.active=embedded
     public DataSource inMemoryDataSource() {
@@ -19,7 +19,7 @@ public class HSQLDBConfig {
         return builder.setType(EmbeddedDatabaseType.HSQL).addScript("/schema-hsql.sql").build();
     }
 
-    @Bean
+    @Bean(name = "dataSource")
     @Profile("hsqldb")
     // --Dspring.profiles.active=hsqldb
     public DataSource hsqldbDataSource() {
