@@ -29,7 +29,8 @@
     </batch:job>
 
     <bean id="itemReader" class="org.springframework.batch.item.file.FlatFileItemReader"
-          p:resource="${input.file.name}"
+          scope="step"
+          p:resource="file:#{jobParameters['input.file.name']}"
           p:lineMapper-ref="lineMapper" />
 
     <bean id="lineMapper" class="org.springframework.batch.item.file.mapping.DefaultLineMapper"
