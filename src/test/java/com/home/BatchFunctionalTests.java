@@ -31,7 +31,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
                                         StepNotificationListener.class,
                                         JobNotificationListener.class}),
         @ContextConfiguration(classes = InBatchJobConfig.class),
-        @ContextConfiguration(classes = BatchConfiguration.class),
+        @ContextConfiguration(locations = "classpath:batch-context.xml"),
         @ContextConfiguration(classes = BatchTestUtil.class)
 })
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, StepScopeTestExecutionListener.class})
